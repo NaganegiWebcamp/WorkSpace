@@ -1,0 +1,13 @@
+<h1>Users#show</h1>
+<p>Find me in app/views/users/show.html.erb</p>
+
+
+<%= @user.name %>
+<%= @user.introduction %>
+<%= @user.email %>
+
+<% @user.works.each do |uw| %>
+<%= uw.title %>
+<%= uw.explanation %>
+<%= link_to work_path(uw) do %>詳細<% end %>
+<% end %>

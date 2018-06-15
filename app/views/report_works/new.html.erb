@@ -1,0 +1,10 @@
+<h1>ReportWorks#new</h1>
+<p>Find me in app/views/report_works/new.html.erb</p>
+
+作品名「<%= link_to work_path(@work) do %> <%= @work.title %> <% end %> 」を通報します。
+
+<%= form_for(@report_work , :url => {:controller => :report_works , :action => :create}) do |f| %>
+理由：
+<%= f.text_area :reason %>
+<%= f.submit "通報する" , data: {confirm:"本当に通報しますか？"} %>
+<% end %>

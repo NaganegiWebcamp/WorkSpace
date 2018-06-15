@@ -1,0 +1,32 @@
+<h1>Works#show</h1>
+<p>Find me in app/views/works/show.html.erb</p>
+
+<p>
+    <strong>Image:</strong>
+    <%= image_tag @work.image_id_url %>
+</p>
+ジャンル：<%= @work.work_genre.name %><br>
+タイトル：<%= @work.title %><br>
+説明：<%= @work.explanation %><br>
+ <!-- @work.album_allow_flg  -->
+公開設定：<%= @work.hide_flg %>中<br>
+<% if @work.user_id == current_user.id %>
+<%= link_to "公開/非公開を変更する", hide_show_update_path(@work) , method: :patch %>
+<%= link_to "削除", work_path(@work), method: :delete ,data: {confirm: "本当に削除しますか？"} %>
+<% end %>
+
+
+<%= link_to work_report_new_path(@work) do %>通報<% end %>
+
+<%= h(flash[:missed]) %>
+
+<%= form_for(@comment_for_work, :url => {:controller => :contest_works , :action => :create}) do |f| %>
+	<%= f.text_area :body %><br>
+	<%= f.submit "投稿する" %>
+<% end %>
+
+<% @comment_for_works.each do |cfw| %>
+<%= cfw.user.name %>
+<%= cfw.created_at %>
+<%= cfw.body %><br>
+<% end %>

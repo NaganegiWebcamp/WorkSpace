@@ -1,0 +1,95 @@
+/*
+ * This is a manifest file that'll be compiled into application.css, which will include all the files
+ * listed below.
+ *
+ * Any CSS and SCSS file within this directory, lib/assets/stylesheets, or any plugin's
+ * vendor/assets/stylesheets directory can be referenced here using a relative path.
+ *
+ * You're free to add application-wide styles to this file and they'll appear at the bottom of the
+ * compiled file so the styles you add here take precedence over styles defined in any other CSS/SCSS
+ * files in this directory. Styles in this file should be added after the last require_* statement.
+ * It is generally better to create a new file per style scope.
+ *
+ *= require_tree .
+ *= require_self
+ */
+
+
+*{
+	margin: 0;
+	padding: 0;
+}
+
+.jua{
+	font-family: 'Jua', sans-serif;
+}
+
+.admins-header-line{
+	width: 100%;
+	height: 60px;
+	background-color: #F0841A;
+	text-align: center;
+}
+.admins-header-navitem-line{
+	width: 100%;
+	height: 50px;
+	background-color: #FDEFCD;
+	text-align: center;
+}
+.admins-header-icon{
+	font-size: 25px;
+	color: #2b77d0;
+}
+.admins-header-text{
+	color: #2b77d0;
+	font-size: 10px;
+	text-align: center;
+}
+
+.header-line{
+	width: 100%;
+	height: 60px;
+	background-color: #AEDCDD;
+	text-align: center;
+}
+
+.header-navitem-line{
+	width: 100%;
+	height: 50px;
+	background-color: #F5F8CA;
+	text-align: center;
+}
+
+.header-navbox{
+	text-align: right;
+}
+
+.header-title{
+	color: #fff;
+	font-size: 45px;
+	line-height: 60px;
+	text-align: center;
+}
+
+.header-navitem{
+	margin: 0 10px;
+	float: right;
+	display: inline-block;
+}
+
+.header-icon{
+	font-size: 25px;
+	color: #659A1F;
+}
+
+.header-text{
+	color: #659A1F;
+	font-size: 10px;
+	text-align: center;
+}
+
+.all-content{
+	padding-top: 70px;
+	width: 90%;
+	margin: auto;
+}

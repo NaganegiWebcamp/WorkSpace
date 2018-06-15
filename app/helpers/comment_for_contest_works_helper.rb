@@ -1,0 +1,2 @@
+module CommentForContestWorksHelper
+end

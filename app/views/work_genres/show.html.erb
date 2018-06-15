@@ -1,0 +1,9 @@
+<h1>WorkGenres#show</h1>
+<p>Find me in app/views/work_genres/show.html.erb</p>
+
+
+<% @works.each do |work| %>
+<%= work.title %>
+<%= work.explanation %>
+<%= link_to work_path(work) do %>詳細<% end %><br>
+<% end %><br>
