@@ -26,22 +26,22 @@ WorkGenre.first_or_create([
 ])
 
 Admin.first_or_create([
-	{ id: 1, name: '管理者A', email:'k1@ws', password:'111111' },
-	{ id: 2, name: '管理者B', email:'k2@ws', password:'111111' },
+	{ id: 1, name: '管理者A', email:'admin1@admin.ws', password:'admin1' },
+	{ id: 2, name: '管理者B', email:'admin2@admin.ws', password:'admin2' },
 ])
 
 #carrierWaveは一つの名前として扱う。普通、_idはいらないので指定するときは_idもいれること。
 User.first_or_create([
-	{ id: 1, :image => File.open("./app/assets/images/1.jpg") , name: '青山雄二', email:'1@ws', password:'111111' ,introduction: 'よろしく' ,massage_allow: true, quit_flg: false},
-	{ id: 2, :image => File.open("./app/assets/images/2.jpg") , name: '飯島朋美', email:'2@ws', password:'111111' , massage_allow: true, quit_flg: false},
-	{ id: 3, :image => File.open("./app/assets/images/3.jpg") , name: '上田秀介', email:'3@ws', password:'111111' ,introduction: 'やあ' ,massage_allow: true, quit_flg: false},
-	{ id: 4, :image => File.open("./app/assets/images/4.jpg") , name: '江藤和樹', email:'4@ws', password:'111111' ,introduction: 'よろしゅう' ,massage_allow: true, quit_flg: false},
-	{ id: 5, :image => File.open("./app/assets/images/5.jpg") , name: '大隈健太', email:'5@ws', password:'111111' ,introduction: '宜しくお願い致します。' ,massage_allow: true, quit_flg: false},
-	{ id: 6, :image => File.open("./app/assets/images/6.jpg") , name: '神田拓哉', email:'6@ws', password:'111111' ,introduction: '写真撮るのが趣味！' ,massage_allow: false, quit_flg: false},
-	{ id: 7, :image => File.open("./app/assets/images/7.jpg") , name: '木下静香', email:'7@ws', password:'111111' ,introduction: 'よろしくお願いします♪' ,massage_allow: false, quit_flg: false},
-	{ id: 8, :image => File.open("./app/assets/images/8.jpg") , name: '栗田哲郎', email:'8@ws', password:'111111' ,massage_allow: false, quit_flg: false},
-	{ id: 9, :image => File.open("./app/assets/images/9.jpg") , name: 'ケン・オイタ', email:'9@ws', password:'111111' ,introduction: 'Hellow!' ,massage_allow: false, quit_flg: false},
-	{ id: 10, :image => File.open("./app/assets/images/10.jpg")  , name: '梢ちゃん', email:'10@ws', password:'111111' ,introduction: 'よろにゃーん' ,massage_allow: false, quit_flg: false},
+	{ id: 1, :image => File.open("./app/assets/images/3.jpg") , name: '青山雄二', email:'user1@user.ws', password:'111111' ,introduction: 'よろしく' ,massage_allow: true, quit_flg: false},
+	{ id: 2, :image => File.open("./app/assets/images/3.jpg") , name: '飯島朋美', email:'user2@user.ws', password:'111111' , massage_allow: true, quit_flg: false},
+	{ id: 3, :image => File.open("./app/assets/images/3.jpg") , name: '上田秀介', email:'user3@user.ws', password:'111111' ,introduction: 'やあ' ,massage_allow: true, quit_flg: false},
+	{ id: 4, :image => File.open("./app/assets/images/3.jpg") , name: '江藤和樹', email:'user4@user.ws', password:'111111' ,introduction: 'よろしゅう' ,massage_allow: true, quit_flg: false},
+	{ id: 5, :image => File.open("./app/assets/images/3.jpg") , name: '大隈健太', email:'user5@user.ws', password:'111111' ,introduction: '宜しくお願い致します。' ,massage_allow: true, quit_flg: false},
+	{ id: 6, :image => File.open("./app/assets/images/3.jpg") , name: '神田拓哉', email:'user6@user.ws', password:'111111' ,introduction: '写真撮るのが趣味！' ,massage_allow: false, quit_flg: false},
+	{ id: 7, :image => File.open("./app/assets/images/3.jpg") , name: '木下静香', email:'user7@user.ws', password:'111111' ,introduction: 'よろしくお願いします♪' ,massage_allow: false, quit_flg: false},
+	{ id: 8, :image => File.open("./app/assets/images/3.jpg") , name: '栗田哲郎', email:'user8@user.ws', password:'111111' ,massage_allow: false, quit_flg: false},
+	{ id: 9, :image => File.open("./app/assets/images/3.jpg") , name: 'ケン・オイタ', email:'user9@user.ws', password:'111111' ,introduction: 'Hellow!' ,massage_allow: false, quit_flg: false},
+	{ id: 10, :image => File.open("./app/assets/images/3.jpg")  , name: '梢ちゃん', email:'user10@user.ws', password:'111111' ,introduction: 'よろにゃーん' ,massage_allow: false, quit_flg: false},
 ])
 
 # Work.first_or_create([
@@ -102,6 +102,7 @@ User.first_or_create([
 Contest.first_or_create([
 	{ id: 1, name: '初めての作品', explanation: '初めて作った思い出の作品を共有しよう！' ,status: false },
 	{ id: 2, name: '自信作', explanation: 'よくできた作品は皆に見せたいもの！' ,status: true },
+	{ id: 3, name: '夏', explanation: '夏にぴったりな作品、お待ちしております！' ,status: true },
 ])
 
 # ContestWork.first_or_create([

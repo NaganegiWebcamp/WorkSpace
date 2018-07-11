@@ -1,56 +1,123 @@
-<h1>Works#index</h1>
-<p>Find me in app/views/works/index.html.erb</p>
-
-<!-- ジャンル一覧選択 -->
-<% @work_genres.each do |wg| %>
-<%= link_to work_genre_path(wg) do %><%= wg.name %><% end %><br>
-<% end %>
---開催中のコンテスト--
-<% @open_contests.each do |oc| %>
-<%= link_to contest_path(oc) do %><%= oc.name %><% end %><br>
-<% end %>
-
---終了したコンテスト--
-<% @hide_contests.each do |hc| %>
-<%= link_to contest_path(hc) do %><%= hc.name %><% end %><br>
-<% end %>
 
 
-<!-- ボタンで隠す -->
-<% if user_signed_in? %>
-<%= form_for(@work) do |f| %>
-    <%= f.label :image %>
-    <%= f.file_field :image, id: :work_image %><br>
-    <%= f.hidden_field :image_cache %>
-    <%= f.label :タイトル %>
-	<%= f.text_field :title %><br>
-	<%= f.label :説明 %>
-	<%= f.text_area :explanation %><br>
-	<%= f.label :ジャンル %>
-	<%= collection_select(:work,:work_genre_id, @work_genres, :id ,:name) %>
-	<%= f.submit "投稿する" %>
-<% end %>
------<br>
-<%= form_for(@contest_work, :url => {:controller => :contest_works , :action => :create}) do |f| %>
-	<%= f.file_field :image_id %><br>
-	<%= f.text_field :title %><br>
-	<%= f.text_area :explanation %><br>
-	<%= collection_select(:contest_work,:contest_id, @contests, :id ,:name) %>
-	<%= f.submit "投稿する" %>
-<% end %>
-<% end %>
+<div class="work-genres">
+	<%= h(flash[:sor]) %>
+	<div class="works">
+			<h3>一般作品新着</h3>
+		<nav>
+		  <div class="nav nav-tabs" id="nav-tab" role="tablist">
+		  	<% @work_genres.each do |wg| %>
+		    <a class="nav-item nav-link<% if wg.id == 1 %> active<% end %>" id="nav-home-tab" data-toggle="tab" href="#nav-home<%= wg.id %>" role="tab" aria-controls="nav-home" aria-selected="true"><%= wg.name %></a>
+		    <% end %>
+		  </div>
+		</nav>
+		<div class="tab-content" id="nav-tabContent">
+			<% @work_genres.each do |wg| %>
+			  <div class="tab-pane fade show<% if wg.id == 1 %> active<% end %>" id="nav-home<%= wg.id %>" role="tabpanel" aria-labelledby="nav-home-tab">
+			  	<div class="tab-works">
+			 	<% if wg.works.present? %>
+			  	<% wg.works.where(hide_flg: false).limit(10).order("created_at DESC").each do |wgw| %>
+			  	  <div class="work">
+				  	<%= image_tag '3.jpg' ,:alt => 'Image' ,class:"sample-image" %><br>
+					<%= link_to work_path(wgw) do %><%= wgw.title %><% end %>
+				  </div>
+			 	<% end %><!-- wg.works.where~... -->
+			 	</div><!-- tab-works -->
+			 <div class="genre-link">
+			  <h6><%= link_to work_genre_path(wg) do %><%= wg.name%>の作品をもっと見る<% end %></h6>
+			   <% else %><!-- wg.works.present-->
+				 	<h5 class="genre-h5">まだ作品が投稿されていません。
+						<% if user_signed_in? %>
+							<%= link_to "最初の投稿者", new_work_path %>になりませんか？
+						<% else %> <!-- user_signed_in -->
+							<%= link_to "ログイン", new_user_session_path %>後、最初の投稿者になりましょう！
+						<% end %><!-- user_signed_in -->
+					</h5>
+					<%= image_tag 'howabout.jpg'%>
+			   <% end %><!-- wg.works.present-->
+			 </div><!-- genre-link -->
+			</div><!--tab-pane fade show -->
+			<% end %><!-- work.genre -->
+		</div> <!-- tab-content -->
+	</div><!-- works -->
+</div><!-- work-genres -->
 
-<%= h(flash[:sor]) %>
---work-<br>
-<% @works.each do |work| %>
-<%= work.title %>
-<%= work.explanation %>
-<%= image_tag work.image.url %>
-<%= link_to work_path(work) do %>詳細<% end %><br>
-<% end %><br>
---contest-work-<br>
-<% @contest_works.each do |c_work| %>
-<%= c_work.title %>
-<%= c_work.explanation %>
-<%= link_to contest_work_path(c_work) do %>詳細<% end %><br>
-<% end %>
+
+<div class="work-genres">
+	<div class="works">
+			<h3>コンテスト作品新着</h3>
+		<nav>
+		  <div class="nav nav-tabs" id="nav-tab" role="tablist">
+		  	<% @open_contests.each do |c| %>
+		    <a class="nav-item nav-link<% if c == @open_contests.last %> active<% end %>" id="nav-home-tab" data-toggle="tab" href="#content-nav-home<%= c.id %>" role="tab" aria-controls="nav-home" aria-selected="true"><%= c.name %></a>
+		    <% end %>
+		  </div>
+		</nav>
+		<div class="tab-content" id="nav-tabContent">
+			<% @open_contests.order(id: "ASC").each do |c| %>
+			  <div class="tab-pane fade show<% if c == @open_contests.last %> active<% end %>" id="content-nav-home<%= c.id %>" role="tabpanel" aria-labelledby="nav-home-tab">
+				  <div class="tab-works">
+				  	<% if c.contest_works.present? %>
+					  <% c.contest_works.where(hide_flg: false).each do |cw| %>
+					  	<div class="work">
+					  	<%= image_tag '3.jpg' ,:alt => 'Image' ,class:"sample-image" %><br>
+						<%= link_to contest_work_path(cw) do %><%= cw.title %><% end %>
+						</div>
+					  <% end %>
+				  </div>
+				  <% if c.contest_works.where(hide_flg: false).count >= 11 %>
+					  <div class="genre-link">
+						<h6><%= link_to contest_path(c) do %><%= c.name%>の作品をもっと見る</h6><% end %>
+					  </div>
+					  <% end %>
+					<% else %>
+					 <h5 class="genre-h5">まだ作品が投稿されていません。
+					  <% if user_signed_in? %>
+						<%= link_to "最初の投稿者", new_contest_work_path %>になりませんか？
+					  <% else %> <!-- user_signed_in -->
+					 	<%= link_to "ログイン", new_user_session_path %>後、最初の投稿者になりましょう！
+					  <% end %><!-- user_signed_in -->
+					 </h5>
+						<%= image_tag 'howabout.jpg'%>
+			 		<% end %>
+			  </div>
+			<% end %>
+		</div>
+	</div>
+</div>
+
+
+
+<button type="button" class="col-12 btn genre-btn" style="margin-top: -100px;" data-toggle="modal" data-target=".modal-lg">ジャンル一覧はこちら</button>
+
+<div class="modal fade modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+     <h2 class="text-center border-bottom my-2">一般作品</h2>
+        <ul class="nav justify-content-center">
+
+        <% @work_genres.each do |wg| %>
+          <li class="nav-item">
+            <%= link_to wg.name , work_genre_path(wg), class:"nav-link text-danger", style:"font-size: 20px;" %>
+          </li>
+          <% end %>
+        </ul>
+      <h2 class="text-center border-bottom my-2">開催中のコンテスト</h2>
+        <ul class="nav justify-content-center">
+        <% @open_contests.each do |oc| %>
+          <li class="nav-item">
+            <%= link_to oc.name , contest_path(oc), class:"nav-link text-danger", style:"font-size: 20px;" %>
+          </li>
+          <% end %>
+        </ul>
+        <h2 class="text-center border-bottom my-2">閉鎖中のコンテスト</h2>
+        <ul class="nav justify-content-center">
+        <% @hide_contests.each do |hc| %>
+          <li class="nav-item">
+            <%= link_to hc.name , contest_path(hc), class:"nav-link text-danger", style:"font-size: 20px;" %>
+          </li>
+          <% end %>
+        </ul>
+    </div>
+  </div>
+</div>

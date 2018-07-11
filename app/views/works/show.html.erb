@@ -1,32 +1,95 @@
-<h1>Works#show</h1>
-<p>Find me in app/views/works/show.html.erb</p>
 
-<p>
-    <strong>Image:</strong>
-    <%= image_tag @work.image_id_url %>
-</p>
-ジャンル：<%= @work.work_genre.name %><br>
-タイトル：<%= @work.title %><br>
-説明：<%= @work.explanation %><br>
- <!-- @work.album_allow_flg  -->
-公開設定：<%= @work.hide_flg %>中<br>
-<% if @work.user_id == current_user.id %>
-<%= link_to "公開/非公開を変更する", hide_show_update_path(@work) , method: :patch %>
-<%= link_to "削除", work_path(@work), method: :delete ,data: {confirm: "本当に削除しますか？"} %>
+<div class="picture-box">
+	<div class="picture">
+    <%= image_tag '3.jpg', alt:'Test Image' ,size:'700x500'%>
+    </div>
+</div>
+
+<div class="picture-info">
+
+
+<table class="table table-bordered table-striped" style="table-layout:fixed; margin-top: 30px;">
+  <thead>
+    <tr>
+      <th colspan="4">作品情報</th>
+      <th scope="col">作品設定</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th colspan="2">タイトル</th>
+      <th colspan="2">カテゴリ</th>
+      <th scope="col">公開範囲</th>
+    </tr>
+    <tr>
+      <td colspan="2"><%= @work.title %></td>
+      <td colspan="2"><%= @work.work_genre.name %></td>
+      <td scope="col"><% if @work.hide_flg == false %>全体公開<% else %>非公開<% end %>中<% if user_signed_in? && @work.user.id == current_user.id %><%= form_for(@work) do |f| %><%= select :work, :hide_flg, {"全体公開" => false, "非公開" => true} %><%= f.submit "変更" %><% end %><% end %></td>
+    </tr>
+    <tr>
+      <th colspan="4">投稿者コメント</th>
+      <th scope="col">
+      	<% if user_signed_in? && @work.user.id == current_user.id %>
+      	  編集・削除
+        <% else %>
+          通報
+      <% end %>
+      </th>
+    </tr>
+    <tr>
+      <td colspan="4" style="word-wrap:break-word;"><%= @work.explanation %></td>
+       <td scope="col"><% if user_signed_in? && @work.user.id == current_user.id %>
+      	<%= link_to edit_work_path(@work) do %><span class="btn btn-warning" >編集<i class="fas fa-edit"></i></span><% end %>
+      	<%= link_to work_path(@work), method: :delete ,data: {confirm: "本当に削除しますか？"} do %><span class="btn btn-success">削除<i class="fas fa-trash"></i></span><% end %>
+      <% else %>
+      <%= link_to work_report_new_path(@work) do %><span class="btn" style="background-color:#496f8d; color: #fafafa;" >通報<i class="fas fa-flag"></i></span><% end %>
+      <% end %>
+      </td>
+    </tr>
+  </tbody>
+</table>
+<% if user_signed_in? %>
+<div class="comment-box">
+	<h3>コメント</h3>
+	<%= h(flash[:missed]) %>
+  <%= form_for(@comment_for_work, url: work_comment_for_works_path(@work) , method: :post) do |f| %>
+	<%= f.text_area :body ,size: "90x5"%><br>
+	<%= f.submit "投稿する" ,class: "btn btn-primary" %>
+  <% end %>
 <% end %>
 
+<% if @work.comment_for_works.present? %>
+<table class="table" style="margin: 50px 0;">
+  <thead class="thead-dark">
+    <tr>
+      <th scope="col">ユーザーネーム</th>
+      <th colspan="4">内容</th>
+      <th scope="col">日時</th>
+      <th scope="col"></th>
+    </tr>
+  </thead>
+  <tbody>
+  	<% @work.comment_for_works.each do |cfw| %>
+    <tr>
+      <th scope="row"><%= cfw.user.name %><% if cfw.user_id == @work.user_id %>
+	◎作者
+	<% end %></th>
+      <td colspan="4"><%= cfw.body %></td>
+      <td><%= cfw.created_at.strftime('%Y/%m/%d %H:%M') %></td>
+      <td><% if user_signed_in? %>
+      		<% if cfw.user_id == current_user.id || @work.id == current_user.id %>
+		      	<%= link_to "削除", work_comment_for_work_path(@work, cfw.id), method: :delete, data: {confirm:"本当に削除しますか？"}  ,class: "btn btn-warning" %><% end %>
+		    <% end %>
+      </td>
+    </tr>
 
-<%= link_to work_report_new_path(@work) do %>通報<% end %>
+	<% end %>
 
-<%= h(flash[:missed]) %>
+  </tbody>
+</table>
 
-<%= form_for(@comment_for_work, :url => {:controller => :contest_works , :action => :create}) do |f| %>
-	<%= f.text_area :body %><br>
-	<%= f.submit "投稿する" %>
 <% end %>
 
-<% @comment_for_works.each do |cfw| %>
-<%= cfw.user.name %>
-<%= cfw.created_at %>
-<%= cfw.body %><br>
-<% end %>
+</div>
+
+<a class="btn" href="#top" style="margin: 30px; padding: 10px; border: 2px solid; width:50px; height: 50px; float: right;"><i class="fas fa-angle-double-up"></i></a>

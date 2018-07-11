@@ -1,0 +1,38 @@
+<% if user_signed_in?%>
+<h2 class="text-center mt-5">現在、<span class="text-danger">"<%= current_user.name %>"</span> さんでログインしています。</h2>
+<h2 class="text-center mt-3 mb-5">一度ログアウトしてからもう一度接続し直してください。</h2>
+<h2 class="text-center w-100 bg-white">
+<%= image_tag("sorry.jpg") %>
+</h2>
+<% else %>
+
+
+<div class=" mx-auto col-10 my-5" style="width: 300px;">
+<h1 class="border-bottom my-5 text-center text-danger">Admins LogIn</h1>
+  <%= form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
+  <div class="form-group">
+    <%= f.email_field :email, autofocus: true, placeholder: "email", autocomplete: "email", :class => "form-control" %>
+  </div>
+
+  <div class="form-group">
+    <%= f.password_field :password, placeholder: "password", autocomplete: "off", :class => "form-control" %>
+  </div>
+
+  <% if devise_mapping.rememberable? -%>
+  <div class="field">
+    <%= f.check_box :remember_me %>
+    <%= f.label :remember_me %>
+  </div>
+  <% end -%>
+
+  <div class="actions">
+    <%= button_tag :type => "submit", :class =>"btn btn-info w-100 my-3" do %>
+    <i class="fas fa-sign-in-alt"></i> Log in
+    <% end %>
+  </div>
+  <% end %>
+</div>
+
+<% end %>
+
+

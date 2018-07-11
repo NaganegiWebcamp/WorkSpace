@@ -1,0 +1,42 @@
+<div style=" color: #555;">
+
+<h2 style="text-align: center; margin-bottom: 20px;">一般投稿</h2>
+
+<%= form_for(@work) do |f| %>
+<table class="table">
+  <thead>
+    <tr>
+      <th scope="col"></th>
+      <th col="3">入力フォーム</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th scope="row">作品画像</th>
+      <td col="3"><%= f.file_field :image ,id: :work_image %></td>
+    </tr>
+   <tr>
+      <th scope="row">作品タイトル</th>
+      <td col="3"><%= f.text_field :title , size: "60x1" %></td>
+    </tr>
+    <tr>
+      <th scope="row">作品説明</th>
+      <td col="3"><%= f.text_area :explanation, size: "60x10" %></td>
+    </tr>
+    <tr>
+      <th scope="row">ジャンル設定</th>
+      <td col="3"><%= collection_select(:work,:work_genre_id, @work_genres, :id ,:name) %></td>
+    </tr>
+    <tr>
+      <th scope="row">公開範囲</th>
+      <td col="3"><%= select :work, :hide_flg, {"全体公開" => false, "非公開" => true} %></td>
+    </tr>
+    <tr>
+      <th scope="row">確認</th>
+      <td col="3"><%= f.submit "投稿する" %></td>
+    </tr>
+  </tbody>
+  <% end %>
+</table>
+
+</div>

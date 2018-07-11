@@ -1,9 +1,60 @@
-<h1>WorkGenres#show</h1>
-<p>Find me in app/views/work_genres/show.html.erb</p>
 
+<h2 class="genre"><%= @work_genre.name %></h2>
 
-<% @works.each do |work| %>
-<%= work.title %>
-<%= work.explanation %>
-<%= link_to work_path(work) do %>詳細<% end %><br>
-<% end %><br>
+<div style="width:90%;">
+<button type="button" class="col-12 btn genre-btn" style="margin-top: -10px; width: 250px; float:right;" data-toggle="modal" data-target=".modal-lg">別ジャンルを見る</button>
+</div>
+<div class="modal fade modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+     <h2 class="text-center border-bottom my-2">一般作品</h2>
+        <ul class="nav justify-content-center">
+
+        <% @work_genres.each do |wg| %>
+          <li class="nav-item">
+            <%= link_to wg.name , work_genre_path(wg), class:"nav-link text-danger", style:"font-size: 20px;" %>
+          </li>
+          <% end %>
+        </ul>
+      <h2 class="text-center border-bottom my-2">開催中のコンテスト</h2>
+        <ul class="nav justify-content-center">
+        <% @open_contests.each do |oc| %>
+          <li class="nav-item">
+            <%= link_to oc.name , contest_path(oc), class:"nav-link text-danger", style:"font-size: 20px;" %>
+          </li>
+          <% end %>
+        </ul>
+        <h2 class="text-center border-bottom my-2">閉鎖中のコンテスト</h2>
+        <ul class="nav justify-content-center">
+        <% @hide_contests.each do |hc| %>
+          <li class="nav-item">
+            <%= link_to hc.name , contest_path(hc), class:"nav-link text-danger", style:"font-size: 20px;" %>
+          </li>
+          <% end %>
+        </ul>
+    </div>
+  </div>
+</div>
+
+<% if @work_genre.works.present? %>
+<div style="width:100%; margin:0 auto; overflow: hidden;">
+<% @work_genre.works.where(hide_flg: false).each do |work| %>
+	<div class="card" style="width: 18rem; float: left; height: 500px; text-align: center; margin:10px; overflow: hidden;">
+	  <%= link_to work_path(work) do %><%= image_tag "3.jpg" ,class:"image-card" %><% end %>
+	  <div class="card-body">
+	    <h5 class="card-title"><%= link_to work_path(work) do %><%= work.title %><% end %></h5>
+	    <p class="card-text"><%= truncate(work.explanation, length: 100 ) %></p>
+	    <%= link_to work_path(work) do %><span class="btn" style="background-color:#ee9c5d; color:#fafafa;">作品を見に行く</span><% end %>
+	  </div>
+	</div><!-- card -->
+
+<% end %>
+</div>
+
+<h4 class="genre-paginate"><%= paginate @works %></h4><a class="btn" href="#top" style="margin-bottom: 30px; padding: 10px; border: 2px solid; width:50px; height: 50px; float:right; "><i class="fas fa-angle-double-up"></i></a>
+<% else %>
+<h3>まだ作品がありません</h3>
+<h2 style="display: inline-block;"><a href="/works/new">投稿しに行く！</a></h2>
+<%= image_tag 'howabout.jpg' %>
+<% end %>
+

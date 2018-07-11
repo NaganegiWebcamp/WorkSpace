@@ -1,0 +1,19 @@
+<h2 style="text-align: center; margin-bottom: 40px;">検索結果</h2>
+
+
+
+<div style="overflow: hidden;">
+<% @qs.each do |u| %>
+<div class="card" style="width: 30%; text-align: center; float: left; margin:10px;">
+  <%= image_tag "user.jpg", width:"90%" ,style:"margin:10px auto;" %>
+  <div class="card-body">
+  	<h5 class="card-title"><%= link_to user_path(u) do %><%= u.name %><% end %></h5>
+    <p class="card-text" style=""><%= truncate(u.introduction, length: 100) %></p>
+  </div>
+</div>
+<% end %>
+</div>
+
+
+
+<%= link_to :back do %><span class="btn btn-success" style="width:200px; float: right; margin-top: 100px;"><i class="fas fa-undo-alt"></i>元のページへ戻る</span><% end %>

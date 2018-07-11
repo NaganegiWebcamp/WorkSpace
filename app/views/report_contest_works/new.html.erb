@@ -1,2 +1,53 @@
-<h1>ReportContestWorks#new</h1>
-<p>Find me in app/views/report_contest_works/new.html.erb</p>
+
+
+<% if @contest_work.user_id == current_user.id %>
+<div class="alert alert-warning" role="alert">
+  これはあなたの作品です。<br>
+　あなたは自身の作品を<%= link_to edit_contest_work_path(@contest_work) do %><strong>編集・削除</strong><% end %>することができます。
+</div>
+
+<% end %>
+
+
+
+
+<table class="table table-bordered table-dark table-striped" style="width: 90%; table-layout:fixed; text-align: center;">
+  <thead>
+    <tr>
+      <th colspan="3">以下の作品を通報します。</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th scope="row">作品</th>
+      <td colspan="2"><%= image_tag '3.jpg' ,size:"300" ,style:"object-fit: cover;" %></td>
+    </tr>
+    <tr>
+      <th scope="row">作品名</th>
+      <td colspan="2"><%= link_to contest_work_path(@contest_work) do %><span style="font-weight: 600; color:#fafafa;"><%= @contest_work.title %></span><% end %></td>
+    </tr>
+    <tr>
+      <th scope="row">作品説明</th>
+      <td colspan="2" style="word-wrap:break-word;"><%= @contest_work.explanation %></td>
+    </tr>
+  </tbody>
+</table>
+
+
+<%= form_for(@report_contest_work , :url => {:controller => :report_contest_works , :action => :create}) do |f| %>
+<table class="table table-bordered" style="width: 90%; table-layout:fixed; text-align: center;">
+  <thead class="thead-light">
+    <tr>
+      <th>通報理由</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><%= f.text_area :reason , size:"60x5" %></td>
+    </tr>
+    <tr>
+      <td><%= f.submit "通報する" , data: {confirm:"本当に通報しますか？"}, class:"btn btn-warning" %></td>
+    </tr>
+  </tbody>
+</table>
+<% end %>

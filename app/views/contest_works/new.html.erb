@@ -1,0 +1,44 @@
+
+
+<div style=" color: #555;">
+
+<h2 style="text-align: center; margin-bottom: 20px;">コンテストへ投稿</h2>
+
+<%= form_for(@contest_work, :url => {:controller => :contest_works , :action => :create}) do |f| %>
+<table class="table">
+  <thead>
+    <tr>
+      <th scope="col"></th>
+      <th col="3">入力フォーム</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th scope="row">作品画像</th>
+      <td col="3"><%= f.file_field :image ,id: :contest_work_image %></td>
+    </tr>
+   <tr>
+      <th scope="row">作品タイトル</th>
+      <td col="3"><%= f.text_field :title , size: "60x1" %></td>
+    </tr>
+    <tr>
+      <th scope="row">作品説明</th>
+      <td col="3"><%= f.text_area :explanation, size: "60x10" %></td>
+    </tr>
+    <tr>
+      <th scope="row">投稿先</th>
+      <td col="3"><%= collection_select(:contest_work,:contest_id, @contests, :id ,:name) %></td>
+    </tr>
+     <tr>
+      <th scope="row">公開範囲</th>
+      <td col="3"><%= select :contest_work, :hide_flg, {"全体公開" => false, "非公開" => true} %></td>
+    </tr>
+    <tr>
+      <th scope="row">確認</th>
+      <td col="3"><%= f.submit "投稿する" %></td>
+    </tr>
+  </tbody>
+  <% end %>
+</table>
+
+</div>

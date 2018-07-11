@@ -1,2 +1,43 @@
-<h1>ContestWorks#edit</h1>
-<p>Find me in app/views/contest_works/edit.html.erb</p>
+
+<div style=" color: #555;">
+
+<h2 style="text-align: center; margin-bottom: 20px;">作品編集</h2>
+
+<%= form_for(@contest_work) do |f| %>
+<table class="table">
+  <thead>
+    <tr>
+      <th scope="col"></th>
+      <th col="3">入力フォーム</th>
+    </tr>
+  </thead>
+  <tbody>
+  	<tr>
+      <th scope="row">作品画像</th>
+      <td col="3"><%= image_tag '3.jpg', alt:'Test Image' ,size:'350x250'%></td>
+    </tr>
+   <tr>
+      <th scope="row">作品タイトル</th>
+      <td col="3"><%= f.text_field :title , size: "60x1" %></td>
+    </tr>
+    <tr>
+      <th scope="row">作品説明</th>
+      <td col="3"><%= f.text_area :explanation, size: "60x10" %></td>
+    </tr>
+    <tr>
+      <th scope="row">参加先</th>
+      <td col="3"><%= collection_select(:contest_work,:contest_id, @contests, :id ,:name) %></td>
+    </tr>
+    <tr>
+      <th scope="row">公開範囲</th>
+      <td col="3"><%= select :contest_work, :hide_flg, {"全体公開" => false, "非公開" => true} %></td>
+    </tr>
+    <tr>
+      <th scope="row"></th>
+      <td col="4"><%= f.submit "更新する" , class:"btn btn-info"%></td>
+    </tr>
+  </tbody>
+  <% end %>
+</table>
+
+</div>

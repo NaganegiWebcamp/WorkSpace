@@ -1,13 +1,122 @@
-<h1>Users#show</h1>
-<p>Find me in app/views/users/show.html.erb</p>
+
+<div class="mypage-box">
+	<%= image_tag "user.jpg", size:"200"  %>
+<table class="table table-bordered" style="width:70%; margin:20px auto;">
+  <thead class="thead-dark">
+    <tr>
+      <th colspan="<% if user_signed_in? && @user.id == current_user.id %>
+      4<% else %>3<% end %>">ユーザー情報</th>
+    </tr>
+  </thead>
+  <thead class="thead-light">
+    <tr>
+      <th colspan="3" style="width: 60%;">ユーザー名</th>
+      <% if user_signed_in? && @user.id == current_user.id %>
+      <th>メールアドレス</th>
+      <% end %>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td colspan="3"><%= @user.name %></td>
+      <% if user_signed_in? && @user.id == current_user.id %>
+      <td><%= @user.email %></td>
+      <% end %>
+    </tr>
+  </tbody>
+ <thead class="thead-light">
+    <tr>
+      <th colspan="3">挨拶</th>
+      <% if user_signed_in? && @user.id == current_user.id %>
+      <th>ユーザー設定</th>
+      <% end %>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td colspan="3"><% if @user.introduction.presence %><%= @user.introduction %><% else %>未設定<% end %></td>
+      <% if user_signed_in? && @user.id == current_user.id %>
+      <td><%= link_to edit_user_path(current_user) do %>編集<% end %></td>
+      <% end %>
+    </tr>
+  </tbody>
+</table>
 
 
-<%= @user.name %>
-<%= @user.introduction %>
-<%= @user.email %>
+<% if @user.works.presence || @user.contest_works.presence %>
+<div class="user-works">
+<h4 style="background-color: #4cb0f1; width:400px; margin:20px auto; color:#fafafa; line-height: 50px;">一般作品</h4>
+</div>
 
-<% @user.works.each do |uw| %>
-<%= uw.title %>
-<%= uw.explanation %>
-<%= link_to work_path(uw) do %>詳細<% end %>
+<div style="width:100%; margin:0 auto; overflow: hidden;">
+<% @works.each do |work| %>
+	<div class="card" style="width: 18rem; float: left; height: 500px; text-align: center; margin:10px; overflow: hidden;">
+	  <%= link_to work_path(work) do %><%= image_tag "3.jpg" ,class:"image-card" %><% end %>
+	  <div class="card-body">
+	    <h5 class="card-title"><%= link_to work_path(work) do %><%= work.title %><% end %></h5>
+	    <p class="card-text"><%= truncate(work.explanation, length: 100 ) %></p>
+	    <% if user_signed_in? && @user.id == current_user.id %>
+		    <%= link_to edit_work_path(work.id) do %>
+		        <% if work.hide_flg == true %>
+		       		<span class="btn" style="background-color:#723a0e; color:#fafafa;">非公開</span>
+		        <% else %>
+		        	<span class="btn" style="background-color:#ee9c5d; color:#fafafa;">全体公開</span>
+		        <% end %>
+	        <% end %><!-- link_to edit_work_path -->
+	    <% else %>
+		    <%= link_to work_path(work.id) do %>
+		        <% if work.hide_flg == true %>
+		       		<span class="btn" style="background-color:#723a0e; color:#fafafa;">非公開</span>
+		        <% else %>
+		        	<span class="btn" style="background-color:#ee9c5d; color:#fafafa;">全体公開</span>
+		        <% end %>
+	        <% end %><!-- link_to edit_work_path -->
+        <% end %>
+	  </div>
+	</div><!-- card -->
+
 <% end %>
+</div>
+
+<h4 class="genre-paginate mb-3"><%= paginate @works %></h4>
+
+<div class="user-works">
+<h4 style="background-color: #4cb0f1; width:400px; margin:20px auto; color:#fafafa; line-height: 50px;">コンテスト参加作品</h4>
+</div>
+
+<div style="width:100%; margin:0 auto; overflow: hidden;">
+<% @contest_works.each do |cw| %>
+  <div class="card" style="width: 18rem; float: left; height: 500px; text-align: center; margin:10px; overflow: hidden;">
+    <%= link_to contest_work_path(cw) do %><%= image_tag "3.jpg" ,class:"image-card" %><% end %>
+    <div class="card-body">
+      <h5 class="card-title"><%= link_to contest_work_path(cw) do %><%= cw.title %><% end %></h5>
+      <p class="card-text"><%= truncate(cw.explanation, length: 100 ) %></p>
+      <% if user_signed_in? && @user.id == current_user.id %>
+        <%= link_to edit_contest_work_path(cw.id) do %>
+            <% if cw.hide_flg == true %>
+              <span class="btn" style="background-color:#723a0e; color:#fafafa;">非公開</span>
+            <% else %>
+              <span class="btn" style="background-color:#ee9c5d; color:#fafafa;">全体公開</span>
+            <% end %>
+          <% end %><!-- link_to edit_work_path -->
+      <% else %>
+        <%= link_to contest_work_path(cw.id) do %>
+            <% if cw.hide_flg == true %>
+              <span class="btn" style="background-color:#723a0e; color:#fafafa;">非公開</span>
+            <% else %>
+              <span class="btn" style="background-color:#ee9c5d; color:#fafafa;">全体公開</span>
+            <% end %>
+          <% end %><!-- link_to edit_work_path -->
+        <% end %>
+    </div>
+  </div><!-- card -->
+
+<% end %>
+</div>
+
+<h4 class="genre-paginate"><%= paginate @contest_works %></h4><a class="btn" href="#top" style="margin: 30px; padding: 10px; border: 2px solid; width:50px; height: 50px; float:right; "><i class="fas fa-angle-double-up"></i></a>
+
+<% end %>
+<%= link_to :back do %><span class="btn btn-info mt-3">元のページへ戻る<i class="fas fa-undo-alt"></i></span><% end %>
+
+</div><!-- mypage-box -->

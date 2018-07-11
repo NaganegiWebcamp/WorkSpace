@@ -1,4 +1,5 @@
 class ReportWorksController < ApplicationController
+  before_action :authenticate_user! ,only: [:new, :create, :thanks]
   def new
   	@work = Work.find(params[:work_id])
   	@report_work = ReportWork.new
@@ -18,6 +19,7 @@ class ReportWorksController < ApplicationController
   end
 
   def thanks
+    @work = Work.find(params[:work_id])
   end
 
   private
