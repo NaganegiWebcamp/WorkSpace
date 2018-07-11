@@ -1,2 +1,36 @@
-<h1>Admins::WorkGenres#index</h1>
-<p>Find me in app/views/admins/work_genres/index.html.erb</p>
+<div style="text-align: center; width:60%; margin:0 auto;">
+
+	<div class="pb-3 mb-3" style="border:3px solid #cce5ff;">
+		<div class="alert alert-primary" role="alert">
+		  	<h4>一般作品</h4>
+		</div>
+		<div>
+		<% @work_genres.each do |wg| %>
+		<strong><%= link_to admins_work_genre_path(wg) do %><%= wg.name %><% end %></strong><br>
+		<% end %>
+		</div>
+	</div>
+	<div class="pb-3 mb-3" style="border:3px solid #d4edda;">
+		<div class="alert alert-success" role="alert">
+			<h4>開催中</h4>
+		</div>
+		<div>
+		<% @contests.where(status: true).each do |c| %>
+		<strong><%= link_to admins_contest_path(c) do %><%= c.name %><% end %></strong><br>
+		<% end %>
+		</div>
+	</div>
+	<div class="pb-3 mb-3" style="border:3px solid #fff3cd;">
+		<div class="alert alert-warning" role="alert">
+			<h4>閉鎖中</h4>
+		</div>
+		<div>
+		<% @contests.where(status: false).each do |c| %>
+		<strong><%= link_to admins_contest_path(c) do %><%= c.name %><% end %></strong><br>
+		<% end %>
+		</div>
+	</div>
+</div>
+
+
+<a class="btn" href="#top" style="margin: 30px; padding:10px; border: 3px solid; width:50px; height: 50px; float: right;"><i class="fas fa-angle-double-up"></i></a>

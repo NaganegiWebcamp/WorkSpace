@@ -2,7 +2,12 @@
 <html>
   <head>
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.13/css/all.css" integrity="sha384-DNOHZ68U8hZfKXOrtjWvjxusGo9WQnrNx2sqG0tfsghAvtVlRW3tvkXWZh58N9jp" crossorigin="anonymous">
-    <link href="https://fonts.googleapis.com/css?family=Jua|Song+Myung" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Jua|Ubuntu" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/earlyaccess/notosansjapanese.css" rel="stylesheet" />
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" integrity="sha384-WskhaSGFgHYWDcbwN70/dfYBj47jz9qbsMId/iRN3ewGhXQFZCSftd1LZCfmhktB" crossorigin="anonymous">
+   <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js" integrity="sha384-smHYKdLADwkXOn1EmN1qk/HfnUcbVRZyYmZ4qpPea6sjB/pTJ0euyQp0Mk8ck+5T" crossorigin="anonymous"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
     <title>Workspace</title>
     <%= csrf_meta_tags %>
@@ -13,110 +18,120 @@
   </head>
 
   <body>
-    <div class="container">
-        <% if current_page?(admins_path) %>
-          <div class="row admins-header-line">
-            <%= link_to admins_path ,class:"header-title jua" do %>WorkSpace ForAdmins
-            <% end %>
-            <div class="admins-header-navitem-line">
-              <% if admin_signed_in? %>
-                <div>
-                   <div class="header-navitem">
-                    <%= link_to new_user_registration_path do %>
-                     <span class="fas fa-user-plus admins-header-icon"></span>
-                     <span class="admins-header-text"><br>Log Out</span>
-                    <% end %>
-                  </div>
-                  <div class="header-navitem">
-                    <%= link_to new_user_session_path do %>
-                     <span class="fas fa-sign-in-alt admins-header-icon"></span>
-                     <span class="admins-header-text"><br>Log In</span>
-                    <% end %>
-                  </div><!-- header-naviitem-->
-                  <div class="header-navitem">
-                    <%= link_to new_user_session_path do %>
-                     <span class="fas fa-sign-in-alt admins-header-icon"></span>
-                     <span class="admins-header-text"><br>Log In</span>
-                    <% end %>
-                  </div><!-- header-naviitem-->
-                  <div class="header-navitem">
-                    <%= link_to new_user_session_path do %>
-                     <span class="fas fa-sign-in-alt admins-header-icon"></span>
-                     <span class="admins-header-text"><br>Log In</span>
-                    <% end %>
-                  </div><!-- header-naviitem-->
-                </div><!---->
-              <% else %>
-                 <div>
-                   <div class="header-navitem">
-                    <%= link_to new_user_registration_path do %>
-                     <span class="fas fa-user-plus admins-header-icon"></span>
-                     <span class="admins-header-text"><br>Sign Up</span>
-                    <% end %>
-                  </div>
-                  <div class="header-navitem">
-                    <%= link_to new_user_session_path do %>
-                     <span class="fas fa-sign-in-alt admins-header-icon"></span>
-                     <span class="admins-header-text"><br>Log In</span>
-                    <% end %>
-                  </div><!-- header-naviitem-->
-                 </div><!---->
-              <% end %>
-          </div> <!-- row admins-header-navitem-line -->
-        </div><!-- row admins-header-line-->
+    <header>
+      <div class="header">
+    <% if admin_signed_in? || current_page?(new_admin_session_path) %>
+       <div class="admins-header-title">
+         <%= link_to admins_path do %><h2>WorkSpace<span> For Admin</span></h2><% end %>
+       </div> <!-- header-title -->
+       <div class="admins-header-nav">
+         <ul>
+          <% if admin_signed_in? %>
+               <li>
+                 <%= link_to admins_new_genres_path do %>
+                   <span class="fas fa-plus-circle header-nav-icon"></span>
+                   <span class="header-nav-text">NewGenre</span>
+                 <% end %>
+               </li>
+               <li>
+                 <%= link_to admins_work_genres_path do %>
+                   <span class="fas fa-book-open header-nav-icon"></span>
+                   <span class="header-nav-text">AllGenres</span>
+                 <% end %>
+               </li>
+               <li>
+                 <%= link_to admins_users_path do %>
+                   <span class="fas fa-users header-nav-icon"></span>
+                   <span class="header-nav-text">Users</span>
+                 <% end %>
+               </li>
+               <li>
+                 <%= link_to admins_report_works_path do %>
+                   <span class="fas fa-exclamation-triangle header-nav-icon"></span>
+                   <span class="header-nav-text">Rpoerts</span>
+                 <% end %>
+               </li>
+               <li>
+                 <%= link_to destroy_admin_session_path do %>
+                   <span class="fas fa-sign-in-alt header-nav-icon"></span>
+                   <span class="header-nav-text">LogOut</span>
+                 <% end %>
+               </li>
+           <% else %><!-- if admin_sign_in?-->
+               <li>
+                 <%= link_to root_path do %>
+                   <span class="fas fa-users header-nav-icon"></span>
+                   <span class="header-nav-text">UserTOP</span>
+                 <% end %>
+               </li>
+           <% end %><!-- if admin_sign_in?-->
+         </ul>
+       </div> <!-- header-nav -->
 
+    <% else %><!-- if admin_signed_in? -->
 
-
-        <% else %>
-
-        <div class="row header-line">
-          <%= link_to root_path ,class:"header-title jua" do %>WorkSpace
-          <% end %>
-        <div class="header-navitem-line">
+       <div class="header-title">
+         <%= link_to root_path do %>
+          <h2>WorkSpace
+            <%= image_tag 'nikukyuu.png', size:'50x50'%></h2>
+         <% end %>
+       </div> <!-- header-title -->
+       <div class="header-nav">
+         <ul>
           <% if user_signed_in? %>
-            <div>
-              <div class="header-navitem">
-                <%= link_to destroy_user_session_path do %>
-                 <span class="fas fa-sign-in-alt header-icon"></span>
-                 <span class="header-text"><br>Log Out</span>
-                <% end %>
-              </div><!-- header-naviitem-->
-               <div class="header-navitem">
-                <%= link_to user_path(current_user) do %>
-                 <span class="fas fa-user header-icon"></span>
-                 <span class="header-text"><br>MyPage</span>
-                <% end %>
-              </div>
-              <div class="header-navitem">
-                <%= link_to users_path do %>
-                 <span class="fas fa-users header-icon"></span>
-                 <span class="header-text"><br>Users</span>
-                <% end %>
-              </div>
-            </div><!---->
-          <% else %>
-             <div>
-               <div class="header-navitem">
-                <%= link_to new_user_registration_path do %>
-                 <span class="fas fa-user-plus header-icon"></span>
-                 <span class="header-text"><br>Sign Up</span>
-                <% end %>
-              </div>
-              <div class="header-navitem">
-                <%= link_to new_user_session_path do %>
-                 <span class="fas fa-sign-in-alt header-icon"></span>
-                 <span class="header-text"><br>Log In</span>
-                <% end %>
-              </div><!-- header-naviitem-->
-            </div><!---->
-          <% end %>
-        </div> <!-- row header-navitem-line -->
-      </div> <!-- row header-line-->
-    <% end %>
-      <div class="row all-content">
+               <li class="dropdown header-nav-drpdwn header-nav-icon">
+                 <span class="dropdown-toggle fas fa-plus" data-toggle="dropdown">
+                 <span class="header-nav-text">NewPost</span></span>
+                 <div class="dropdown-menu drpdwn" aria-labelledby="dropdownMenuButton">
+                    <%= link_to new_work_path do %>Works<% end %>
+                    <%= link_to new_contest_work_path do %>ContestWorks<% end %>
+                  </div>
+               </li>
+               <li>
+                 <%= link_to users_path do %>
+                   <span class="fas fa-users header-nav-icon"></span>
+                   <span class="header-nav-text">Users</span>
+                 <% end %>
+               </li>
+               <li>
+                 <%= link_to user_path(current_user) do %>
+                   <span class="fas fa-user header-nav-icon"></span>
+                   <span class="header-nav-text">MyPage</span>
+                 <% end %>
+               </li>
+               <li>
+                 <%= link_to destroy_user_session_path do %>
+                   <span class="fas fa-sign-in-alt header-nav-icon"></span>
+                   <span class="header-nav-text">LogOut</span>
+                 <% end %>
+               </li>
+          <% else %> <!-- if user_signed_in? -->
+               <li>
+                 <%= link_to new_user_registration_path do %>
+                   <span class="fas fa-user-plus header-nav-icon"></span>
+                   <span class="header-nav-text">SignUp</span>
+                 <% end %>
+               </li>
+               <li>
+                 <%= link_to new_user_session_path do %>
+                   <span class="fas fa-sign-in-alt header-nav-icon"></span>
+                   <span class="header-nav-text">LogIn</span>
+             <% end %>
+           </li>
+           <% end %><!-- if user_signed_in? -->
+         </ul>
+       </div> <!-- header-nav -->
+     <% end %>
+     </div><!-- header-->
+   </header>
+
+
+
+    <main>
+      <div class="main-contents">
 
        <%= yield %>
       </div>
-    </div> <!-- container -->
+    </main>
   </body>
 </html>

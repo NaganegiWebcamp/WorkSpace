@@ -1,8 +1,30 @@
-<h1>Users#index</h1>
-<p>Find me in app/views/users/index.html.erb</p>
 
+<h2 style="text-align: center; margin-bottom: 40px;">ユーザー一覧</h2>
+
+<p style=" text-align: center;">
+  <a class="btn" style="background-color:#ee9c5d; color: white; font-weight: 800; " data-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">
+    友達を探す
+  </a>
+
+</p>
+<div class="collapse" id="collapseExample">
+  <div class="card card-body" style="text-align: center;">
+     <%= search_form_for(@q, url:search_path) do |f| %>
+	 <%= f.label :name_cont, "ユーザー名：" %>
+	 <%= f.search_field :name_cont %>
+	 <%= f.submit class:"btn" ,style:"background-color:#ee9c5d; color:#fafafa; font-weight:800;" %>
+	 <% end %>
+  </div>
+</div>
+
+<div style="overflow: hidden;">
 <% @users.each do |u| %>
-名前：<%= u.name %><br>
-自己紹介：<%= u.introduction %><br>
-ユーザーページ：<%= link_to user_path(u) do %>詳細<% end %><br><br>
+<div class="card" style="width: 30%; text-align: center; float: left; margin:10px;">
+  <%= image_tag "user.jpg", width:"90%" ,style:"margin:10px auto;" %>
+  <div class="card-body">
+    <p class="card-text" style=""><%= link_to user_path(u) do %><%= u.name %><% end %></p>
+  </div>
+</div>
 <% end %>
+</div>
+

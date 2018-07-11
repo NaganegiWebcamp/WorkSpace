@@ -1,2 +1,50 @@
-<h1>Admins::Roots#top</h1>
-<p>Find me in app/views/admins/roots/top.html.erb</p>
+
+<%= link_to  admins_new_genres_path do %>
+	<div class="admin-top" style="border: 3px solid #f5becf;">
+		<div class="admin-top-1" style="background-color: #f5becf; color:#fafafa; text-shadow: 2px 2px #d08a98;">
+			新規ジャンル<i class="fas fa-arrow-alt-circle-right ml-2"></i>
+		</div>
+		<div class="admin-top-text" style="background-color: #fafafa; height: 200px;">
+			<h5 style="">ジャンルや・コンテストを新しく作ることができます。</h5>
+			<h6 style="">新しいジャンルまたはコンテストが作成されると、ユーザーが作品を投稿できるようになります。</h6>
+		</div>
+	</div>
+<% end %>
+
+<%= link_to  admins_report_works_path do %>
+	<div class="admin-top" style="border: 3px solid #96c0f1;">
+		<div class="admin-top-1" style="background-color:#96c0f1 ; color:#fafafa;  text-shadow: 2px 2px #6087f1;">
+			通報一覧<i class="fas fa-arrow-alt-circle-right ml-2"></i>
+		</div>
+		<div class="admin-top-text" style="background-color: #fafafa; height: 200px;">
+			<h5 style="">ユーザーからの通報を全て閲覧することができます。</h5>
+			<h6 style="">ユーザーにより通報された作品が全て表示されます。不適切だと判断した作品は、作品の詳細画面より編集・削除できます。</h6>
+		</div>
+	</div>
+<% end %>
+
+<%= link_to  admins_work_genres_path do %>
+	<div class="admin-top" style="border: 3px solid #edce00; ">
+		<div class="admin-top-1" style="background-color:#edce00; color:#fafafa;  text-shadow: 2px 2px #c67700;">
+			ジャンル一覧<i class="fas fa-arrow-alt-circle-right ml-2"></i>
+		</div>
+		<div class="admin-top-text" style="background-color: #fafafa; height: 200px;">
+			<h5 style="">すべてのジャンルや・コンテストを閲覧できます。</h5>
+			<h6 style="">それぞれの詳細ページより当該ジャンルに属する作品を閲覧できます。</h6>
+		</div>
+	</div>
+<% end %>
+
+<%= link_to  admins_users_path do %>
+	<div class="admin-top" style="border: 3px solid #cdd866;">
+		<div class="admin-top-1" style="background-color:#cdd866; color:#fafafa;  text-shadow: 2px 2px #839d2e;">
+			ユーザー一覧<i class="fas fa-arrow-alt-circle-right ml-2"></i>
+		</div>
+		<div class="admin-top-text" style="background-color: #fafafa; height: 200px;">
+			<h5 style="">すべてのユーザーを閲覧できます。</h5>
+			<h6 style="">ユーザーの検索、ユーザー情報の閲覧・編集、ユーザー作品を閲覧できます。</h6>
+		</div>
+	</div>
+<% end %>
+
+

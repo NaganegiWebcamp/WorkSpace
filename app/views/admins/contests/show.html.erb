@@ -1,2 +1,37 @@
-<h1>Admins::Contests#show</h1>
-<p>Find me in app/views/admins/contests/show.html.erb</p>
+
+<h2 class="genre"><%= @contest.name %></h2>
+<div class="card text-center" style="width: 80%; margin:0 auto;">
+  <div class="card-header">
+    コンテスト情報
+  </div>
+  <div class="card-body">
+    <h5 class="card-title"><% if @contest.status == true %>投稿受付中<% else %>投稿拒否中<% end %></h5>
+    <p class="card-text"><%= @contest.explanation %></p>
+    <%= link_to admins_work_genres_path ,class:"btn btn-primary" do %>別のジャンルを見る<% end %></a>
+  </div>
+</div>
+
+<% if @contest.contest_works.present? %>
+<div style="width:100%; margin:30px auto; overflow: hidden; text-align: center;">
+	<h4>作品一覧</h4>
+<% @contest_works.each do |cw| %>
+	<div class="card" style="width: 18rem; float: left; height: 500px; text-align: center; margin:10px; overflow: hidden;">
+	  <%= link_to admins_contest_work_path(cw.id) do %><%= image_tag "3.jpg" ,class:"image-card" %><% end %>
+	  <div class="card-body">
+	    <h5 class="card-title"><%= link_to admins_contest_work_path(cw.id) do %><%= cw.title %><% end %></h5>
+	    <p class="card-text"><%= truncate(cw.explanation, length: 100 ) %></p>
+	    <%= link_to admins_contest_work_path(cw) do %><span class="btn" style="background-color:#ee9c5d; color:#fafafa;">作品を見に行く</span><% end %>
+	  </div>
+	</div><!-- card -->
+
+<% end %>
+</div>
+
+<h4 class="genre-paginate"><%= paginate @contest_works %></h4><a class="btn" href="#top" style="margin-bottom: 30px; padding: 10px; border: 2px solid; width:50px; height: 50px; float:right; "><i class="fas fa-angle-double-up"></i></a>
+<% else %>
+<div style="width: 95%; margin:80px auto; text-align: center;">
+<h3 style="margin:0 auto; ">作品が投稿されていません。</h3>
+
+</div><!-- style width 95 -->
+<% end %>
+

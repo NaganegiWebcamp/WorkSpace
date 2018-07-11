@@ -1,2 +1,54 @@
-<h1>Admins::ReportWorks#index</h1>
-<p>Find me in app/views/admins/report_works/index.html.erb</p>
+
+<% if @reports.present? %>
+<h2 class="admin-report-genre">一般作品</h2>
+
+<div style="width:100%; margin:0 auto; overflow: hidden;">
+<% @reports.order(id: "DESC").each do |r| %>
+	<div class="card" style="width: 18rem; float: left; height: 550px; text-align: center; margin:10px; overflow: hidden;">
+	  <%= link_to admins_work_path(r.work.id) do %><%= image_tag "3.jpg" ,class:"image-card"%><% end %>
+	  <div class="card-body" style="border-top: 1px solid #bbb;">
+	    <h4 class="card-title">作品名：<%= link_to admins_work_path(r.work.id) do  %><%= r.work.title %><% end %></h4>
+	    <h5 class="card-title" style="border: 2px solid #333; width:100%;">通報者：<%= link_to admins_user_path(r.user.id) do %><%= r.user.name %><% end %></h5>
+	    <p class="card-text" style="border: 2px solid #333; width:100%;">通報理由：<%= truncate(r.reason, length: 100 ) %></p>
+	    <%= link_to admins_report_work_path(r) do %><span class="btn" style="background-color:#ee9c5d; color:#fafafa;">通報内容を詳しく見る</span><% end %>
+	     <%= link_to admins_report_work_path(r) ,method: :delete, data: {confirm: "本当に削除しますか？"} do %><span class="btn mt-2" style="background-color:#6a6a6a; color:#fafafa;">削除する</span><% end %>
+	  </div>
+	</div><!-- card -->
+
+<% end %>
+</div>
+
+<h4 class="genre-paginate"><%= paginate @reports %></h4><a class="btn" href="#top" style="margin-bottom: 30px; padding: 10px; border: 2px solid; width:50px; height: 50px; float:right; "><i class="fas fa-angle-double-up"></i></a>
+<% end %>
+
+<% if @c_reports.present? %>
+<h2 class="admin-report-genre">コンテスト作品通報一覧</h2>
+
+<div style="width:100%; margin:0 auto; overflow: hidden;">
+<% @c_reports.order(id: "DESC").each do |cr| %>
+	<div class="card" style="width: 18rem; float: left; height: 550px; text-align: center; margin:10px; overflow: hidden;">
+	  <%= link_to admins_contest_work_path(cr.contest_work.id) do %><%= image_tag "3.jpg" ,class:"image-card" %><% end %>
+	  <div class="card-body" style="border-top: 1px solid #bbb;">
+	    <h4 class="card-title">作品名：<%= link_to admins_contest_work_path(cr.contest_work.id) do  %><%= cr.contest_work.title %><% end %></h4>
+	    <h5 class="card-title" style="border: 2px solid #333; width:100%;">通報者：<%= link_to admins_user_path(cr.user.id) do %><%= cr.user.name %><% end %></h5>
+	    <p class="card-text" style="border: 2px solid #333; width:100%;">通報理由：<%= truncate(cr.reason, length: 100 ) %></p>
+	    <%= link_to admins_report_contest_work_path(cr) do %><span class="btn" style="background-color:#ee9c5d; color:#fafafa;">通報内容を詳しく見る</span><% end %>
+	     <%= link_to admins_report_contest_work_path(cr) ,method: :delete, data: {confirm: "本当に削除しますか？"} do %><span class="btn mt-2" style="background-color:#6a6a6a; color:#fafafa;">削除する</span><% end %>
+	  </div>
+	</div><!-- card -->
+
+<% end %>
+</div>
+
+<h4 class="genre-paginate"><%= paginate @reports %></h4><a class="btn" href="#top" style="margin-bottom: 30px; padding: 10px; border: 2px solid; width:50px; height: 50px; float:right; "><i class="fas fa-angle-double-up"></i></a>
+<% end %>
+
+<% if @reports.blank? && @c_reports.blank? %>
+<div class="alert alert-info" role="alert" style="text-align: center;">
+  <h2 class="alert-heading">現在、通報はありません。</h2>
+
+</div>
+<div style="width:100%; text-align: center;">
+<%= link_to :back do %><span class="btn btn-success" style="width:200px; margin-top: 30px; "><i class="fas fa-undo-alt"></i>元のページへ戻る</span><% end %>
+</div>
+<% end %>

@@ -1,46 +1,48 @@
 class WorksController < ApplicationController
-  def index
-  	@work = Work.new
-  	@work_genres = WorkGenre.all
-    @open_contests = Contest.where(status: true)
-    @hide_contests = Contest.where(status: false)
-  	@works = Work.where(hide_flg: false)
-  	@contest_work = ContestWork.new
-  	@contests = Contest.where(status: false)
-    @contest_works = ContestWork.all
+  before_action :authenticate_user! ,only: [:new, :create, :edit, :update, :hide_show_update, :destroy]
+  def new
+    @work = Work.new
+    @work_genres = WorkGenre.all
   end
 
   def create
+    @work_genres = WorkGenre.all
+    work = Work.new(work_params)
+    work.user_id = current_user.id
+    if work.save
+      redirect_to root_path
+    else
+      render :index
+      @work = Work.new
+      @work_genres = WorkGenre.all
+      @works = Work.all
+    end
+  end
+
+  def index
   	@work_genres = WorkGenre.all
-  	work = Work.new(work_params)
-  	work.user_id = current_user.id
-  	if work.save
-  	  redirect_to root_path
-  	else
-  	  render :index
-  	  @work = Work.new
-  	  @work_genres = WorkGenre.all
-  	  @works = Work.all
-  	end
+    @open_contests = Contest.where(status: true)
+    @hide_contests = Contest.where(status: false)
   end
 
   def show
     @work = Work.find(params[:id])
     @comment_for_work = CommentForWork.new
-    @comment_for_works = CommentForWork.all
   end
 
   def edit
+    @work = Work.find(params[:id])
+    @work_genres = WorkGenre.all
   end
 
-  def hide_show_update
-    work = Work.find(params[:id])
-    if work.off?
-      work.update(hide_flg: true)
+  def update
+    @work = Work.find(params[:id])
+    if current_user.id == @work.user_id
+      @work.update(work_update_params)
+      redirect_to work_path(@work)
     else
-      work.update(hide_flg: false)
+      render :edit
     end
-      redirect_to work_path(work)
   end
 
   def destroy
@@ -51,10 +53,11 @@ class WorksController < ApplicationController
 
   private
   def work_params
-  	params.require(:work).permit(:user_id, :work_genre_id, :title, :explanation, :image)
+  	params.require(:work).permit(:user_id, :work_genre_id, :title, :explanation, :image, :hide_flg)
   end
 
-  def update_params
-    params.fetch(:work,{}).permit(:hide_flg)
+  def work_update_params
+    params.require(:work).permit(:work_genre_id, :title, :explanation, :hide_flg)
   end
+
 end

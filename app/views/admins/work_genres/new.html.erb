@@ -1,0 +1,47 @@
+
+<%= form_for(@work_genre, :url => { :controller => :work_genres, :action => :create}) do |f| %>
+<table class="table w-100 table-bordered" style="text-align: center;">
+  <thead class="thead-dark">
+    <tr>
+      <th colspan="2">新規ジャンル作成</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th scope="row">ジャンル名</th>
+      <td><%= f.text_field :name  ,size:"60x1"%></td>
+    </tr>
+    <tr>
+      <td colspan="2"><%= f.submit "新規ジャンル作成" , class:"btn btn-info"%></td>
+    </tr>
+  </tbody>
+</table>
+<% end %>
+
+<%= form_for(@contest, :url => { :controller => :contests, :action => :create}) do |f| %>
+<table class="table w-100 table-bordered" style="text-align: center;">
+  <thead class="thead-dark">
+    <tr>
+      <th colspan="2">新規コンテスト作成</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th scope="row">コンテスト名</th>
+      <td><%= f.text_field :name  ,size:"60x1"%></td>
+    </tr>
+    <tr>
+      <th scope="row">コンテスト説明</th>
+      <td><%= f.text_area :explanation ,size:"60x5"%></td>
+    </tr>
+    <tr>
+      <th scope="row">状態</th>
+      <td><%= select :contest, :status, [["開催中(作品投稿可能)", true], ["閉鎖中(作品投稿不可)", false]],  :prompt => "選択してください" %></td>
+    </tr>
+    <tr>
+      <td colspan="2"><%= f.submit "新規コンテスト作成", class:"btn btn-info" %></td>
+    </tr>
+  </tbody>
+</table>
+<% end %>
+

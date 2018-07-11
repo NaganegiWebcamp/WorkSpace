@@ -1,2 +1,25 @@
-<h1>Admins::WorkGenres#show</h1>
-<p>Find me in app/views/admins/work_genres/show.html.erb</p>
+
+<h2 class="genre"><%= @work_genre.name %></h2>
+
+<% if @work_genre.works.present? %>
+<div style="width:100%; margin:0 auto; overflow: hidden;">
+<% @work_genre.works.where(hide_flg: false).each do |work| %>
+	<div class="card" style="width: 18rem; float: left; height: 500px; text-align: center; margin:10px; overflow: hidden;">
+	  <%= link_to admins_work_path(work) do %><%= image_tag "3.jpg" ,class:"image-card" %><% end %>
+	  <div class="card-body">
+	    <h5 class="card-title"><%= link_to admins_work_path(work) do %><%= work.title %><% end %></h5>
+	    <p class="card-text"><%= truncate(work.explanation, length: 100 ) %></p>
+	    <%= link_to admins_work_path(work) do %><span class="btn" style="background-color:#ee9c5d; color:#fafafa;">作品を見に行く</span><% end %>
+	  </div>
+	</div><!-- card -->
+
+<% end %>
+</div>
+
+<h4 class="genre-paginate"><%= paginate @work %></h4><a class="btn" href="#top" style="margin-bottom: 30px; padding: 10px; border: 2px solid; width:50px; height: 50px; float:right; "><i class="fas fa-angle-double-up"></i></a>
+<% else %>
+<h3>まだ作品がありません</h3>
+<h2 style="display: inline-block;"><a href="/works/new">投稿しに行く！</a></h2>
+<%= image_tag 'howabout.jpg' %>
+<% end %>
+

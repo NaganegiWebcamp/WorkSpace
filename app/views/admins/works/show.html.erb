@@ -1,2 +1,74 @@
-<h1>Admins::Works#show</h1>
-<p>Find me in app/views/admins/works/show.html.erb</p>
+
+<div class="picture-box">
+	<div class="picture">
+    <%= image_tag '3.jpg', alt:'Test Image' ,size:'700x500'%>
+    </div>
+</div>
+
+<div class="picture-info">
+
+
+<table class="table table-bordered table-striped" style="table-layout:fixed; margin-top: 30px;">
+  <thead>
+    <tr>
+      <th colspan="4">作品情報</th>
+      <th scope="col">作品設定</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th colspan="2">タイトル</th>
+      <th colspan="2">カテゴリ</th>
+      <th scope="col">公開範囲</th>
+    </tr>
+    <tr>
+      <td colspan="2"><%= @work.title %></td>
+      <td colspan="2"><%= @work.work_genre.name %></td>
+      <td scope="col"><% if @work.hide_flg == false %>全体公開<% else %>非公開<% end %>中<%= form_for(@work, url: admins_work_path, method: :patch) do |f| %><%= select :work, :hide_flg, {"全体公開" => false, "非公開" => true} %><%= f.submit "変更" %><% end %></td>
+    </tr>
+    <tr>
+      <th colspan="4">投稿者コメント</th>
+      <th scope="col">
+      	  編集・削除
+      </th>
+    </tr>
+    <tr>
+      <td colspan="4" style="word-wrap:break-word;"><%= @work.explanation %></td>
+       <td scope="col"><%= link_to edit_admins_work_path(@work) do %><span class="btn btn-warning" >編集<i class="fas fa-edit"></i></span><% end %>
+      	<%= link_to admins_work_path(@work), method: :delete ,data: {confirm: "本当に削除しますか？"} do %><span class="btn btn-success">削除<i class="fas fa-trash"></i></span><% end %>
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+<% if @work.comment_for_works.present? %>
+<table class="table" style="margin: 50px 0;">
+  <thead class="thead-dark">
+    <tr>
+      <th scope="col">ユーザーネーム</th>
+      <th colspan="4">内容</th>
+      <th scope="col">日時</th>
+      <th scope="col"></th>
+    </tr>
+  </thead>
+  <tbody>
+  	<% @work.comment_for_works.each do |cfw| %>
+    <tr>
+      <th scope="row"><%= cfw.user.name %><% if cfw.user_id == @work.user_id %>
+	◎作者<% end %></th>
+      <td colspan="4"><%= cfw.body %></td>
+      <td><%= cfw.created_at.strftime('%Y/%m/%d %H:%M') %></td>
+      <td> 	<%= link_to "削除", admins_work_comment_for_work_path(@work, cfw.id), method: :delete, data: {confirm:"本当に削除しますか？"}  ,class: "btn btn-warning" %>
+      </td>
+    </tr>
+
+	<% end %>
+
+  </tbody>
+</table>
+
+<% end %>
+
+</div>
+
+<a class="btn" href="#top" style="margin: 30px; padding: 10px; border: 2px solid; width:50px; height: 50px; float: right;"><i class="fas fa-angle-double-up"></i></a>
