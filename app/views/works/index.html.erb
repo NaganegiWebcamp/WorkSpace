@@ -74,12 +74,16 @@
 					 <h5 class="genre-h5">まだ作品が投稿されていません。
 					  <% if user_signed_in? %>
 						<%= link_to "最初の投稿者", new_contest_work_path %>になりませんか？
-					  <% else %> <!-- user_signed_in -->
-					 	<%= link_to "ログイン", new_user_session_path %>後、最初の投稿者になりましょう！
-					  <% end %><!-- user_signed_in -->
-					 </h5>
-						<%= image_tag 'howabout.jpg'%>
-			 		<% end %>
+					  <% else %><!-- wg.works.present-->
+				 	<h5 class="genre-h5">まだ作品が投稿されていません。
+						<% if user_signed_in? %>
+							<%= link_to "最初の投稿者", new_work_path %>になりませんか？
+						<% else %> <!-- user_signed_in -->
+							<%= link_to "ログイン", new_user_session_path %>後、最初の投稿者になりましょう！
+						<% end %><!-- user_signed_in -->
+					</h5>
+					<%= image_tag 'howabout.jpg'%>
+			   <% end %><!-- wg.works.present-->
 			  </div>
 			<% end %>
 		</div>
