@@ -68,14 +68,9 @@
 				  <% if c.contest_works.where(hide_flg: false).count >= 11 %>
 					  <div class="genre-link">
 						<h6><%= link_to contest_path(c) do %><%= c.name%>の作品をもっと見る</h6><% end %>
-					  </div>
 					  <% end %>
 					<% else %>
-					 <h5 class="genre-h5">まだ作品が投稿されていません。
-					  <% if user_signed_in? %>
-						<%= link_to "最初の投稿者", new_contest_work_path %>になりませんか？
-					  <% else %><!-- wg.works.present-->
-				 	<h5 class="genre-h5">まだ作品が投稿されていません。
+					<h5 class="genre-h5">まだ作品が投稿されていません。
 						<% if user_signed_in? %>
 							<%= link_to "最初の投稿者", new_work_path %>になりませんか？
 						<% else %> <!-- user_signed_in -->
@@ -84,6 +79,7 @@
 					</h5>
 					<%= image_tag 'howabout.jpg'%>
 			   <% end %><!-- wg.works.present-->
+			  </div>
 			  </div>
 			<% end %>
 		</div>
